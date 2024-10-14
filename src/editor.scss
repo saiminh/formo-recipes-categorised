@@ -1,0 +1,28 @@
+.explainer {
+  background-color: var(--wp--preset--color--formo-peach);
+  color: var(--wp--preset--color--formo-cream);
+  font-size: 1rem;
+  padding: 1em;
+  margin: 0;
+
+  &:before {
+    // create a little i graphic icon to inidcate information
+
+    content: 'i';
+    display: inline-block;
+    font-size: 1em;
+    font-weight: bold;
+    background-color: var(--wp--preset--color--formo-cream);
+    color: var(--wp--preset--color--formo-peach);
+    border-radius: 50%;
+    width: 1em;
+    height: 1em;
+    text-align: center;
+    line-height: 1em;
+    margin-right: 1em;
+  }
+}
+.formo-recipes-categorised__preview {
+  width: 100%;
+  height: auto;
+}

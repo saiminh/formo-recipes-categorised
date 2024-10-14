@@ -1,0 +1,281 @@
+
+.formo2022-recipes-categorised {
+  position: relative;
+  width: 100%;
+  background-color: var(--wp--preset--color--formo-blue);
+  color: var(--wp--preset--color--formo-cream);
+  padding: 1em 0;
+}
+.formo2022-recipes-filters {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  z-index: 10;
+
+  @media screen and (max-width: 782px) {
+    flex-direction: column;
+    gap: .25rem;
+    width: var(--wp--custom--width--col-10);
+    margin: 0 auto;
+  }
+}
+.formo2022-recipes-ingredients,
+.formo2022-recipes-meals,
+.formo2022-recipes-preptimes {
+  height: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0;
+  margin-left: calc(-1 * var(--padding));
+  padding: 0 var(--padding);
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  padding: 0 1rem;
+  position: relative;
+
+  @media screen and (max-width: 782px) {
+    padding: 0 .25rem;
+    height: auto;
+  }
+  
+  &:-webkit-scrollbar {
+    display: none;
+  }
+
+  & a,
+  & .legend {
+    border: 1px solid;
+    width: 100%;
+    text-align: center;
+    border-radius: 1em;
+    font-size: var(--wp--preset--font-size--body);
+    padding: .33em .75em;
+    color: var(--wp--preset--color--formo-cream);
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 0 4px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    width: 100%;
+    
+    @media screen and (max-width: 782px) {
+      font-size: 1rem;
+    }
+    
+    &[data-filter-active="true"] {
+      background-color: var(--wp--preset--color--formo-cream);
+      color: var(--wp--preset--color--formo-blue);
+      display: inline-block;
+      font-family: var(--wp--preset--font-family--krana);
+      font-weight: bold;
+      
+      @media screen and (min-width: 782px) {
+        &:hover {
+          color: #0000ff66;
+          text-decoration: line-through;
+        }
+      }
+    }
+  }
+  & .legend:has( ~ a[data-filter-active="true"]) {
+    display: none;
+  }
+  &:hover .legend:has( ~ a[data-filter-active="true"]) {
+    display: inline-block;
+  }
+  & .legend {
+    position: relative;
+    display: inline-block;
+    box-shadow: none;
+    cursor: default;
+    text-transform: lowercase;
+  }
+  &:hover .legend:hover {
+    font-family: var(--wp--preset--font-family--roobert);
+    font-weight: normal;
+  }
+  &:hover a ,
+  &:hover .legend {
+    display: inline-block;
+    background-color: var(--wp--preset--color--formo-cream);
+    color: var(--wp--preset--color--formo-blue);
+    border-color: var(--wp--preset--color--formo-cream);
+  }
+  &:hover a:hover {
+    @media screen and (min-width: 782px) {
+      font-family: var(--wp--preset--font-family--krana);
+      font-weight: bold;
+    }
+    
+    &:active {
+      font-family: var(--wp--preset--font-family--roobert);
+      font-weight: normal;
+    }
+  }
+}
+.formo2022-recipes-query-outer {
+  width: var(--wp--custom--width--col-10);
+  margin: 0 auto;
+  overflow-x: hidden;
+}
+.formo2022-recipes-query {
+  display: grid;
+  grid-auto-flow: column;
+  min-width: min-content;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  transition: all .3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.gridflow-row .formo2022-recipes-query {
+  grid-auto-flow: row;
+}
+.formo2022-recipe {
+  width: calc(var(--wp--custom--width--col-10) / 4);
+  padding: 2.5vw;
+  height: auto;
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;  
+  animation: fadeIn 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) .2s both;
+
+  @media screen and (max-width: 1100px) {
+    padding: 1.25vw;
+  }
+  @media screen and (max-width: 782px) {
+    width: calc(var(--wp--custom--width--col-10) / 2);
+    padding: 0.5em;
+  }
+  
+  & figure {
+    position: relative;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    overflow: hidden;
+    display: block;
+    margin: 0;
+    border-radius: 1rem 1rem 0 0 ;
+    
+    & img, & video {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &[data-ingredient-hidden="true"],
+  &[data-preptime-hidden="true"],
+  &[data-meal-hidden="true"] {
+    display: none;
+    opacity: 0;
+  }
+
+  & .formo2022-recipe-inner {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: 100%;
+  }
+
+  & .formo2022-recipe-content {
+    width: 100%;
+    flex: 1 1 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    color: var(--wp--preset--color--formo-blue);
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    border-radius: 0 0 1rem 1rem;
+    overflow: hidden;
+    background-color: var(--wp--preset--color--formo-cream);
+    z-index: 9999;
+    text-align: center;
+    transition: all .3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    
+    & .formo2022-recipe-fullname {
+      font-size: calc(1.78 * var(--wp--preset--font-size--small));
+      transition: all .4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      margin: 0;
+      padding: 1em .5rem 0rem .5rem;
+      
+      // @media screen and (max-width: 782px) {
+      //   padding: .5rem .25rem 0rem .25rem;
+      //   font-size: var(--wp--preset--font-size--small);
+      // }
+    }
+    & .formo2022-recipe-description {
+      padding: 0.25rem .5rem 1em .5rem;
+      font-size: calc(1.18 * var(--wp--preset--font-size--small));
+      text-transform: uppercase;
+      letter-spacing: -0.025em;
+      
+      // @media screen and (max-width: 782px) {
+      //   padding: 0.125rem .5rem .5rem .5rem;
+      //   font-size: var(--wp--preset--font-size--tiny);
+      //   line-height: 1.1;
+      // }
+    }
+  }
+}
+.formo2022-no-recipes {
+  grid-column: span 4;
+  grid-row: span 2;
+  width: calc(var(--wp--custom--width--col-10));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  aspect-ratio: 1.425;
+  height: auto;
+  display: none;
+
+  p {
+    font-size: var(--wp--preset--font-size--large);
+    text-align: center;
+  }
+
+  &.shown {
+    display: flex;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.formo2022-recipes-next, .formo2022-recipes-prev {
+  position: absolute;
+  top: calc(50% + 1.5rem);
+  transform: translateY(-50%);
+  left: calc(var(--wp--custom--width--col-1) - 1.2rem);
+  background-color: var(--wp--preset--color--formo-blue);
+  border: 1px solid;
+  border-radius: 1rem;
+  padding: 0em 1.2rem;
+  color: var(--wp--preset--color--formo-cream);
+  overflow: hidden;
+  text-indent: -999em;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: -100%;
+
+  @media screen and (max-width: 782px) {
+    top: calc( 50% + 3.333rem );
+  }
+}
+.formo2022-recipes-prev {
+  background-image: url("data:image/svg+xml,%3Csvg width='6' height='12' viewBox='0 0 6 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 6.13867L5.25434 1.418' stroke='%23FFFBF4' stroke-linecap='round'/%3E%3Cpath d='M5.25391 10.8613L0.999564 6.14065' stroke='%23FFFBF4' stroke-linecap='round'/%3E%3C/svg%3E%0A");
+}
+.formo2022-recipes-next {
+  background-image: url("data:image/svg+xml,%3Csvg width='6' height='11' viewBox='0 0 6 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.25391 5.54688L0.999564 0.832029' stroke='%23FFFBF4' stroke-linecap='round'/%3E%3Cpath d='M1 10.2637L5.25434 5.54883' stroke='%23FFFBF4' stroke-linecap='round'/%3E%3C/svg%3E%0A");
+  left: auto;
+  right: calc(var(--wp--custom--width--col-1) - 1.2rem);;
+}
