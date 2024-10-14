@@ -163,7 +163,7 @@ function toggleIngredient(event) {
   const ingredient = event.currentTarget.getAttribute('data-filter');
   if (ingredient === activeingredient) {
     activeingredientFilter?.setAttribute('data-filter-active', false);
-    event.currentTarget.removeAttribute('data-filter-active');
+    event.currentTarget.setAttribute('data-filter-active', false);
     children.forEach(child => {
       if (child.getAttribute('data-ingredient-hidden') === 'true') {
         child.setAttribute('data-ingredient-hidden', false);
@@ -175,10 +175,10 @@ function toggleIngredient(event) {
     children.forEach(child => {
       const childingredient = child.getAttribute('data-ingredient');
       if (ingredient === 'none') {
-        child.removeAttribute('data-ingredient-hidden');
+        child.setAttribute('data-ingredient-hidden', false);
       } else {
         if (childingredient?.includes(ingredient)) {
-          child.removeAttribute('data-ingredient-hidden');
+          child.setAttribute('data-ingredient-hidden', false);
         } else {
           child.setAttribute('data-ingredient-hidden', true);
         }
@@ -199,7 +199,7 @@ function togglePreptime(event) {
   const preptime = event.currentTarget.getAttribute('data-filter');
   if (preptime === activepreptime) {
     activepreptimeFilter?.setAttribute('data-filter-active', false);
-    event.currentTarget.removeAttribute('data-filter-active');
+    event.currentTarget.setAttribute('data-filter-active', false);
     children.forEach(child => {
       if (child.getAttribute('data-preptime-hidden') === 'true') {
         child.setAttribute('data-preptime-hidden', false);
@@ -211,10 +211,10 @@ function togglePreptime(event) {
     children.forEach(child => {
       const childpreptime = child.getAttribute('data-preptime');
       if (preptime === 'none') {
-        child.removeAttribute('data-preptime-hidden');
+        child.setAttribute('data-preptime-hidden', false);
       } else {
         if (childpreptime?.includes(preptime)) {
-          child.removeAttribute('data-preptime-hidden');
+          child.setAttribute('data-preptime-hidden', false);
         } else {
           child.setAttribute('data-preptime-hidden', true);
         }
@@ -235,7 +235,7 @@ function toggleMeal(event) {
   const meal = event.currentTarget.getAttribute('data-filter');
   if (meal === activemeal) {
     activemealFilter?.setAttribute('data-filter-active', false);
-    event.currentTarget.removeAttribute('data-filter-active');
+    event.currentTarget.setAttribute('data-filter-active', false);
     children.forEach(child => {
       if (child.getAttribute('data-meal-hidden') === 'true') {
         child.setAttribute('data-meal-hidden', false);
@@ -247,10 +247,10 @@ function toggleMeal(event) {
     children.forEach(child => {
       const childmeal = child.getAttribute('data-meal');
       if (meal === 'none') {
-        child.removeAttribute('data-meal-hidden');
+        child.setAttribute('data-meal-hidden', false);
       } else {
         if (childmeal?.includes(meal)) {
-          child.removeAttribute('data-meal-hidden');
+          child.setAttribute('data-meal-hidden', false);
         } else {
           child.setAttribute('data-meal-hidden', true);
         }
@@ -282,22 +282,41 @@ document.querySelectorAll('.formo2022-recipes-meals > a').forEach(meal => {
   meal.addEventListener('click', toggleMeal)
 })
 
-// const filters = document.querySelectorAll('.formo2022-recipes-filters > div');
-// filters.forEach(filter => {
-//   const label = filter.querySelector('.legend');
-//   label.addEventListener('touchend', () => {
-//     filter.classList.toggle('open');
+const filters = document.querySelectorAll('.formo2022-recipes-filters > div');
 
-//     // create an eventlistener for the first click outside of the filter and remove open
-//     document.addEventListener('touchend', (e) => {
-//       if (e.target !== label && e.target.getAttribute('data-filter')) {
-//         filter.classList.remove('open');
-//         document.removeEventListener('touchend', () => {});
-//       }
-//     })
+const openFilterMenu = (thisfilter) => {
+  filters.forEach(filter => {
+    if (thisfilter !== filter) {
+      closeFilterMenu(filter);
+    }
+  })
+  thisfilter.classList.toggle('open');
+}
+const closeFilterMenu = (filter) => {
+  filter.classList.remove('open');
+}
 
-//   })
-// })
+filters.forEach(filter => {
+  const label = filter.querySelector('.legend');
+  label.addEventListener('click', () => {
+    if (filter.classList.contains('open')) {
+      closeFilterMenu(filter);
+    } 
+    else {
+      openFilterMenu(filter);
+
+      const handleTouchEnd = (e) => {
+        if (!filter.contains(e.target)) {
+          closeFilterMenu(filter);
+          document.removeEventListener('click', handleTouchEnd);
+        }
+      };
+
+      document.addEventListener('click', handleTouchEnd);
+
+    }
+  })
+})
 
 function resetPosition(query) {
   query.style.transform = 'translateX(0px)';

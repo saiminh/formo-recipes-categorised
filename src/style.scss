@@ -81,8 +81,15 @@
   & .legend:has( ~ a[data-filter-active="true"]) {
     display: none;
   }
-  &:hover .legend:has( ~ a[data-filter-active="true"]) {
-    display: inline-block;
+  @media (hover: none) {
+    &.open .legend:has( ~ a[data-filter-active="true"]) {
+      display: inline-block;
+    }
+  }
+  @media (hover: hover) {
+    &:hover .legend:has( ~ a[data-filter-active="true"]) {
+      display: inline-block;
+    }
   }
   & .legend {
     position: relative;
@@ -91,26 +98,37 @@
     cursor: default;
     text-transform: lowercase;
   }
-  &:hover .legend:hover {
-    font-family: var(--wp--preset--font-family--roobert);
-    font-weight: normal;
-  }
-  &:hover a ,
-  &:hover .legend {
-    display: inline-block;
-    background-color: var(--wp--preset--color--formo-cream);
-    color: var(--wp--preset--color--formo-blue);
-    border-color: var(--wp--preset--color--formo-cream);
-  }
-  &:hover a:hover {
-    @media screen and (min-width: 782px) {
-      font-family: var(--wp--preset--font-family--krana);
-      font-weight: bold;
-    }
-    
-    &:active {
+  @media (hover: hover) {
+    &:hover .legend:hover {
       font-family: var(--wp--preset--font-family--roobert);
       font-weight: normal;
+    }
+    &:hover a ,
+    &:hover .legend {
+      display: inline-block;
+      background-color: var(--wp--preset--color--formo-cream);
+      color: var(--wp--preset--color--formo-blue);
+      border-color: var(--wp--preset--color--formo-cream);
+    }
+    &:hover a:hover {
+      @media screen and (min-width: 782px) {
+        font-family: var(--wp--preset--font-family--krana);
+        font-weight: bold;
+      }
+      
+      &:active {
+        font-family: var(--wp--preset--font-family--roobert);
+        font-weight: normal;
+      }
+    }
+  }
+  @media (hover: none) {
+    &.open a ,
+    &.open .legend {
+      display: inline-block;
+      background-color: var(--wp--preset--color--formo-cream);
+      color: var(--wp--preset--color--formo-blue);
+      border-color: var(--wp--preset--color--formo-cream);
     }
   }
 }
