@@ -43,9 +43,20 @@ if ( ! defined( 'ABSPATH' ) ) {
     'taxonomy' => 'preptime',
     'hide_empty' => false,
   ) );
+
+  $orderedPreptimes = array();
+
+  foreach ($preptimes as $preptime) {
+    $termid = $preptime->term_id;
+    $order = get_term_meta($termid, 'order', true);
+    $orderedPreptimes[$order] = $preptime;
+  }
+
+  ksort($orderedPreptimes, SORT_NUMERIC);
+
   // create HTML string for each preptime 
   $preptimesAsString = '';
-  foreach ($preptimes as $preptime) {
+  foreach ($orderedPreptimes as $preptime) {
     $preptimesAsString = $preptimesAsString.'<a data-filter="'.$preptime->slug.'" data-filter-active="false">'.$preptime->name.'</a>';
   }
   
@@ -53,9 +64,20 @@ if ( ! defined( 'ABSPATH' ) ) {
     'taxonomy' => 'meal',
     'hide_empty' => false,
   ) );
+
+  $orderedMeals = array();
+
+  foreach ($meals as $meal) {
+    $termid = $meal->term_id;
+    $order = get_term_meta($termid, 'order', true);
+    $orderedMeals[$order] = $meal;
+  }
+
+  ksort($orderedMeals, SORT_NUMERIC);
+
   // create HTML string for each meal 
   $mealsAsString = '';
-  foreach ($meals as $meal) {
+  foreach ($orderedMeals as $meal) {
     $mealsAsString = $mealsAsString.'<a data-filter="'.$meal->slug.'" data-filter-active="false">'.$meal->name.'</a>';
   }
 
@@ -176,7 +198,11 @@ if ( ! defined( 'ABSPATH' ) ) {
         $mealSlugString = 'no-preptime-assigned';
       }
       
-
+      if (function_exists('pll__')) {
+        $with = pll__('with');
+      } else {
+        $with = 'with';
+      }
 
       $recipethumbnail = get_the_post_thumbnail( get_the_ID() );
       $permalink = get_the_permalink();
@@ -194,7 +220,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             '<figure class="formo2022-recipe-thumbnail">'.$recipethumbnail.'</figure>'.
             '<div class="formo2022-recipe-content">'.
               '<h2 class="formo2022-recipe-fullname">'.$recipename.'</h2>'.
-              '<div class="formo2022-recipe-description">with '.$mainingredientNameString.'</div>'.
+              '<div class="formo2022-recipe-description">'.$with.' '.$mainingredientNameString.'</div>'.
             '</div>'.
           '</a>'.
         '</div>';
