@@ -4,7 +4,7 @@
  * Description:       Example block scaffolded with Create Block tool.
  * Requires at least: 6.6
  * Requires PHP:      7.2
- * Version:           0.1.1
+ * Version:           0.1.2
  * Author:            The WordPress Contributors
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -48,7 +48,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
   foreach ($preptimes as $preptime) {
     $termid = $preptime->term_id;
-    $order = get_term_meta($termid, 'order', true);
+    $order = get_term_meta($termid, 'order', true) ?? 0;
     $orderedPreptimes[$order] = $preptime;
   }
 
@@ -69,7 +69,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
   foreach ($meals as $meal) {
     $termid = $meal->term_id;
-    $order = get_term_meta($termid, 'order', true);
+    $order = get_term_meta($termid, 'order', true) ?? 0;
     $orderedMeals[$order] = $meal;
   }
 
