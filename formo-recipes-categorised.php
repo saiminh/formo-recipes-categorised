@@ -49,6 +49,12 @@ if ( ! defined( 'ABSPATH' ) ) {
   foreach ($preptimes as $preptime) {
     $termid = $preptime->term_id;
     $order = get_term_meta($termid, 'order', true) ?? 0;
+    
+     // Ensure unique order by incrementing if already taken
+     while (isset($orderedPreptimes[$order])) {
+      $order++;
+    }
+    
     $orderedPreptimes[$order] = $preptime;
   }
 
@@ -66,10 +72,16 @@ if ( ! defined( 'ABSPATH' ) ) {
   ) );
 
   $orderedMeals = array();
-
+  
   foreach ($meals as $meal) {
     $termid = $meal->term_id;
-    $order = get_term_meta($termid, 'order', true) ?? 0;
+    $order = get_term_meta($termid, 'order', true);
+    
+    // Ensure unique order by incrementing if already taken
+    while (isset($orderedMeals[$order])) {
+      $order++;
+    }
+    
     $orderedMeals[$order] = $meal;
   }
 
