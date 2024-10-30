@@ -117,7 +117,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     'post_type' => 'formo2022_recipe',
     'post_status' => 'publish',
     'posts_per_page' => -1, 
-    'order' => 'ASC',
+    'order' => 'DESC',
   );
   global $more;
   $loop = new WP_Query( $args ); 
